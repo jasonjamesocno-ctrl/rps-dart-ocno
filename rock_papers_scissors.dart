@@ -33,3 +33,47 @@ void main() {
   print("$player1 chose ${player1Move ?? ""}. "
       "$player2 chose ${player2Move ?? ""}.");
 }
+
+String? validateMove(String input) {
+  List<String> moves = ['rock', 'paper', 'scissors'];
+
+  String move = input.trim().toLowerCase();
+
+  if (moves.contains(move)) {
+    return move;
+  }
+
+  return null;
+}
+
+String getMove(String playerName) {
+  while (true) {
+    stdout.write(
+        "$playerName, enter your move (rock/paper/scissors): ");
+
+    String? input = stdin.readLineSync();
+
+    String? move = validateMove(input ?? "");
+
+    if (move != null) {
+      return move;
+    }
+
+    print("Invalid move. Please type rock, paper, or scissors.");
+  }
+}
+
+/// Decides the winner of the round.
+String? decideWinner(String player1Move, String player2Move) {
+  if (player1Move == player2Move) {
+    return null;
+  }
+
+  if ((player1Move == "rock" && player2Move == "scissors") ||
+      (player1Move == "paper" && player2Move == "rock") ||
+      (player1Move == "scissors" && player2Move == "paper")) {
+    return "Player 1";
+  }
+
+  return "Player 2";
+}
